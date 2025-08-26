@@ -1,0 +1,253 @@
+/* =============================
+   Coffee Shop — Base Styles
+   Author: Ecep x Raihan
+   Notes: semantic, responsive, modern CSS
+   ============================= */
+
+/* 1) CSS Variables (Design Tokens) */
+:root {
+  /* Brand */
+  --clr-bg: #0f0f10;
+  --clr-surface: #151518;
+  --clr-card: #1b1b1f;
+  --clr-primary: #c38a3a; /* coffee gold */
+  --clr-primary-600: #a9772f;
+  --clr-accent: #7c4a25; /* roasted beans */
+
+  /* Text */
+  --clr-text: #e9e9ec;
+  --clr-muted: #b4b4bc;
+
+  /* Borders & shadows */
+  --radius: 16px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.35);
+
+  /* Layout */
+  --container: 1100px;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+}
+
+/* 2) Modern CSS Reset (trimmed) */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html:focus-within { scroll-behavior: smooth; }
+body { margin: 0; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+img, picture { max-width: 100%; display: block; }
+ul, ol { list-style: none; padding: 0; margin: 0; }
+button, input, textarea, select { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* 3) Base Typography */
+body {
+  background: radial-gradient(1200px 600px at 80% -10%, rgba(195,138,58,.12), transparent 60%), var(--clr-bg);
+  color: var(--clr-text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.2;
+  margin: 0 0 var(--space-4);
+}
+
+p { margin: 0 0 var(--space-4); color: var(--clr-muted); }
+
+/* 4) Utilities */
+.container {
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1.2rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: linear-gradient(180deg, var(--clr-primary), var(--clr-primary-600));
+  color: #111;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .15s ease, filter .2s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); filter: brightness(1.05); }
+.btn:active { transform: translateY(0); filter: brightness(.95); }
+
+/* Focus visible for a11y */
+:where(a, button, input, textarea) :focus { outline: none; }
+:where(a, button, input, textarea).focus-visible,
+:where(a, button, input, textarea):focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--clr-primary) 60%, white);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* 5) Navbar */
+header { position: sticky; top: 0; z-index: 50; }
+.navbar {
+  backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--clr-bg) 80%, black);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.navbar .nav-link {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4);
+  padding: var(--space-4);
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.navbar a { color: var(--clr-muted); font-weight: 600; }
+.navbar a:hover { color: var(--clr-text); }
+
+/* Search form in nav */
+.navbar form { display: flex; align-items: center; gap: .5rem; margin-left: auto; }
+.navbar input[type="text"] {
+  background: var(--clr-card);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--clr-text);
+  padding: .6rem .8rem;
+  border-radius: 10px;
+}
+.navbar button[type="submit"] {
+  background: var(--clr-primary);
+  border: none;
+  color: #111;
+  padding: .6rem .9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 6) Hero */
+.hero { padding: clamp(3rem, 6vw, 6rem) 0; }
+.hero .container { display: grid; gap: var(--space-8); align-items: center; grid-template-columns: 1.2fr .8fr; }
+.hero-text h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+.hero-text p { max-width: 50ch; }
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+/* 7) Featured Coffee */
+.featured { padding: var(--space-12) 0; background: linear-gradient(180deg, transparent, rgba(255,255,255,.03)); }
+.featured-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.featured-content ul {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+.coffee-item {
+  background: var(--clr-card);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: var(--space-3);
+}
+.coffee-item img { border-radius: calc(var(--radius) - 8px); aspect-ratio: 4/3; object-fit: cover; }
+.coffee-item h3 { margin: .25rem 0; }
+.coffee-item span { font-weight: 700; color: var(--clr-primary); }
+.coffee-item button {
+  margin-top: .25rem;
+  border: 1px solid color-mix(in oklab, var(--clr-primary) 65%, #fff);
+  background: transparent;
+  color: var(--clr-text);
+  padding: .6rem .9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.coffee-item button:hover { background: color-mix(in oklab, var(--clr-primary) 20%, var(--clr-card)); transform: translateY(-1px); }
+
+/* 8) Testimonial */
+.testimonial { padding: var(--space-12) 0; }
+.testimonial-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.testimonial-content ul { margin-top: var(--space-6); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
+.testimonial-item { background: var(--clr-surface); border: 1px solid rgba(255,255,255,.06); padding: var(--space-5); border-radius: var(--radius); display: grid; grid-template-columns: 64px 1fr; gap: var(--space-4); align-items: center; }
+.testimonial-img img { width: 64px; height: 64px; border-radius: 50%; background: #2a2a2f; object-fit: cover; }
+.testimonial-text h4 { margin: 0 0 .25rem; }
+
+/* 9) Contact / About */
+.contact { padding: var(--space-12) 0; }
+.contact-header h5 { color: var(--clr-primary); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .25rem; }
+.contact-header h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+
+.contact-form { margin-top: var(--space-6); display: grid; gap: var(--space-6); grid-template-columns: 1.1fr .9fr; align-items: start; }
+.contact-form form { display: grid; gap: var(--space-4); background: var(--clr-card); border: 1px solid rgba(255,255,255,.06); padding: var(--space-6); border-radius: var(--radius); }
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  background: #111216;
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--clr-text);
+  padding: .8rem 1rem;
+  border-radius: 10px;
+}
+.contact-form textarea { min-height: 140px; resize: vertical; }
+.contact-form label { display: flex; align-items: center; gap: .6rem; color: var(--clr-muted); }
+.contact-form button[type="submit"] { justify-self: start; }
+
+.social-links { display: flex; gap: var(--space-4); align-items: center; }
+.social-links a { color: var(--clr-muted); font-weight: 600; }
+.social-links a:hover { color: var(--clr-primary); }
+
+.store-locations { background: var(--clr-surface); border: 1px solid rgba(255,255,255,.06); padding: var(--space-6); border-radius: var(--radius); }
+.store-locations h3 { margin-bottom: var(--space-4); }
+.locations h5 { margin: 0 0 .25rem; color: var(--clr-primary); }
+
+/* 10) Footer */
+.footer { margin-top: var(--space-12); border-top: 1px solid rgba(255,255,255,.06); background: #0b0b0c; }
+.footer-container { width: min(100% - 2rem, var(--container)); margin: 0 auto; display: grid; gap: var(--space-8); grid-template-columns: repeat(4, 1fr); padding: var(--space-10) 0; }
+.footer-brand p { color: var(--clr-muted); }
+.footer-links h4, .footer-contact h4, .footer-social h4 { margin-bottom: var(--space-4); }
+.footer-links a { color: var(--clr-muted); }
+.footer-links a:hover { color: var(--clr-text); }
+.footer-contact p { margin: 0 0 .25rem; }
+.footer-social a { color: var(--clr-muted); }
+.footer-social a:hover { color: var(--clr-primary); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding: var(--space-4) 0; text-align: center; color: var(--clr-muted); }
+
+/* 11) Media Queries */
+@media (max-width: 1024px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .navbar form { order: 99; width: 100%; justify-content: flex-end; }
+}
+
+@media (max-width: 768px) {
+  .navbar .nav-link { gap: var(--space-3); }
+  .navbar form { width: 100%; }
+  .contact-form { grid-template-columns: 1fr; }
+  .footer-container { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 520px) {
+  .footer-container { grid-template-columns: 1fr; }
+}
+
+/* 12) Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* 13) Misc tiny polish */
+section + section { scroll-margin-top: 96px; }
+#featured-section { scroll-margin-top: 120px; }
+
+/* Optional: simple hover underline for links */
+a:hover { text-decoration: underline; text-decoration-color: rgba(255,255,255,.25); text-underline-offset: 3px; }
+
+/* End */
